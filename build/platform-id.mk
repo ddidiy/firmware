@@ -20,7 +20,7 @@ USBD_PID_CDC=0x5740
 
 ifneq (,$(PLATFORM))
 
-################创客核心板####################
+################开发板####################
 ifeq ("$(PLATFORM)","neutron")
 PLATFORM_ID = 888002
 endif
@@ -45,9 +45,13 @@ ifeq ("$(PLATFORM)","fox")
 PLATFORM_ID = 878008
 endif
 
-#add 此处添加创客核心板
+ifeq ("$(PLATFORM)","nbiot")
+PLATFORM_ID = 838011
+endif
 
-################商业模块####################
+#add 此处添加开发板
+
+################模组####################
 ifeq ("$(PLATFORM)","w67")
 PLATFORM_ID = 888006
 endif
@@ -59,7 +63,18 @@ endif
 ifeq ("$(PLATFORM)","l6")
 PLATFORM_ID = 868010
 endif
-#add  此处添加模块
+#add  此处添加模组
+
+################产品####################
+ifeq ("$(PLATFORM)","gl2000")
+PLATFORM_ID = 188002
+endif
+
+ifeq ("$(PLATFORM)","gl2100")
+PLATFORM_ID = 178003
+endif
+
+#add  此处添加产品
 
 ################其他####################
 ifeq ("$(PLATFORM)","gcc")
@@ -74,21 +89,12 @@ ifeq ("$(PLATFORM)","anytest")
 PLATFORM_ID = 208003
 endif
 
-ifeq ("$(PLATFORM)","gl2000")
-PLATFORM_ID = 188002
-endif
-
-ifeq ("$(PLATFORM)","gl2100")
-PLATFORM_ID = 178003
-endif
-
 #add  此处添加其他
 
 ################示例####################
 ifeq ("$(PLATFORM)","newhal")
 PLATFORM_ID = 600000
 endif
-
 
 
 ifeq (,$(PLATFORM_ID))
@@ -110,7 +116,7 @@ endif
 
 PLATFORM_ARCH=arm
 
-################创客核心板####################
+################开发板####################
 ifeq ("$(PLATFORM_ID)","888002") #neutron
 PLATFORM=neutron
 PLATFORM_DEVICE=STM32F411xE
@@ -181,10 +187,20 @@ PLATFORM_APP_ADDR=0x08020000
 PLATFORM_THREADING=1
 endif
 
+ifeq ("$(PLATFORM_ID)","838011") #nbiot
+PLATFORM=nbiot
+PLATFORM_DEVICE=STM32L151xB
+PLATFORM_NAME=nbiot
+PLATFORM_MCU=STM32L1xx
+MCU_CORE=cortex-m3
+PRODUCT_DESC=IntoRobot ant,  lora board, 128k flash, 16k sram
+PLATFORM_BOOT_ADDR=0x08000000
+PLATFORM_APP_ADDR=0x08006000
+endif
 
-# 此处新增创客核心板
+# 此处新增开发板
 
-################商业模块####################
+################模组####################
 ifeq ("$(PLATFORM_ID)","888006") #w67
 PLATFORM_ARCH=xtensa-lx106
 PLATFORM=w67
@@ -218,7 +234,35 @@ PRODUCT_DESC=IntoRobot l6, 128k flash, 16k sram
 PLATFORM_BOOT_ADDR=0x08000000
 PLATFORM_APP_ADDR=0x08006000
 endif
-# 此处新增模块
+# 此处新增模组
+
+################产品####################
+ifeq ("$(PLATFORM_ID)","188002") #gl2000
+PLATFORM=gl2000-wifi
+PLATFORM_DEVICE=STM32F411xE
+PLATFORM_NAME=gl2000
+PLATFORM_MCU=STM32F4xx
+MCU_CORE=cortex-m4
+PRODUCT_DESC=IntoYun LoRaWan GateWay WiFi, Internal flash 512k flash, 128k sram + SPI flash 4096K
+PLATFORM_BOOT_ADDR=0x08000000
+PLATFORM_APP_ADDR=0x08020000
+PLATFORM_THREADING=1
+endif
+
+ifeq ("$(PLATFORM_ID)","178003") #gl2100
+PLATFORM=gl2000-gprs
+PLATFORM_DEVICE=STM32F411xE
+PLATFORM_NAME=gl2100
+PLATFORM_MCU=STM32F4xx
+MCU_CORE=cortex-m4
+PRODUCT_DESC=IntoYun LoRaWan GateWay GPRS, Internal flash 512k flash, 128k sram + SPI flash 4096K
+PLATFORM_BOOT_ADDR=0x08000000
+PLATFORM_APP_ADDR=0x08020000
+PLATFORM_THREADING=1
+endif
+
+# 此处新增产品
+
 
 ################其他####################
 ifeq ("$(PLATFORM_ID)","208001") # gcc
@@ -253,30 +297,6 @@ MCU_CORE=cortex-m3
 PRODUCT_DESC=IntoRobot anytest, 128k flash, 20k sram
 PLATFORM_BOOT_ADDR=0x08000000
 PLATFORM_APP_ADDR=0x08007000
-endif
-
-ifeq ("$(PLATFORM_ID)","188002") #gl2000
-PLATFORM=gl2000-wifi
-PLATFORM_DEVICE=STM32F411xE
-PLATFORM_NAME=gl2000
-PLATFORM_MCU=STM32F4xx
-MCU_CORE=cortex-m4
-PRODUCT_DESC=IntoYun LoRaWan GateWay WiFi, Internal flash 512k flash, 128k sram + SPI flash 4096K
-PLATFORM_BOOT_ADDR=0x08000000
-PLATFORM_APP_ADDR=0x08020000
-PLATFORM_THREADING=1
-endif
-
-ifeq ("$(PLATFORM_ID)","178003") #gl2100
-PLATFORM=gl2000-gprs
-PLATFORM_DEVICE=STM32F411xE
-PLATFORM_NAME=gl2100
-PLATFORM_MCU=STM32F4xx
-MCU_CORE=cortex-m4
-PRODUCT_DESC=IntoYun LoRaWan GateWay GPRS, Internal flash 512k flash, 128k sram + SPI flash 4096K
-PLATFORM_BOOT_ADDR=0x08000000
-PLATFORM_APP_ADDR=0x08020000
-PLATFORM_THREADING=1
 endif
 
 # 此处新增其他
