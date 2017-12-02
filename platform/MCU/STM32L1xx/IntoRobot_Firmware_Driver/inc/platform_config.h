@@ -42,13 +42,6 @@
 
 /* Exported macro ------------------------------------------------------------*/
 
-#if PLATFORM_GPRS == PLATFORM_ID
-    #define HAS_SERIAL_FLASH
-    #define USE_SERIAL_FLASH
-    #define sFLASH_PAGESIZE     0x1000 /* 4096 bytes sector size that needs to be erased */
-    #define sFLASH_PAGECOUNT    512    /* 2MByte storage */
-#endif
-
 #ifdef HAS_SERIAL_FLASH
 //SPI FLASH Interface pins
 #define sFLASH_SPI                          SPI2
@@ -91,7 +84,7 @@
 #define PREPSTRING2(x) #x
 #define PREPSTRING(x) PREPSTRING2(x)
 
-#if PLATFORM_ID == PLATFORM_ANT || PLATFORM_ID == PLATFORM_L6 || PLATFORM_ID == PLATFORM_GPRS
+#if PLATFORM_ID == PLATFORM_ANT || PLATFORM_ID == PLATFORM_L6 || PLATFORM_ID == PLATFORM_NBIOT
 #define INTERNAL_FLASH_SIZE                 (0x20000)
 #else
     #pragma message "PLATFORM_ID is " PREPSTRING(PLATFORM_ID)
