@@ -135,6 +135,14 @@ void USB_USART_Send_Data(uint8_t Data)
 {
     //TODO
     //osMutexWait(usb_mutex, osWaitForever);
+    //if (USBD_STATE_CONFIGURED == USBD_Device.dev_state) {
+    if(USBD_Device.dev_address != 0) {
+        USBD_CDC_SetTxBuffer(&USBD_Device, &Data, 1);
+        while(USBD_CDC_TransmitPacket(&USBD_Device)!=USBD_OK);//如果没有连接 将卡在这里
+        //USBD_CDC_TransmitPacket(&USBD_Device);
+        //HAL_Delay_Microseconds(1000);
+    }
+    /*
     volatile system_tick_t start_micros, current_micros, elapsed_micros;
 
     start_micros = HAL_Timer_Get_Micro_Seconds();
@@ -153,6 +161,7 @@ void USB_USART_Send_Data(uint8_t Data)
             }
         }
     }
+    */
 
     //TODO
     //osMutexRelease(usb_mutex);

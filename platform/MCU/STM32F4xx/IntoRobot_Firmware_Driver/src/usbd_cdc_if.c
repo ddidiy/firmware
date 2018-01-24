@@ -31,6 +31,7 @@
 #include "usbd_cdc_desc.h"
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
+#include "service_debug.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -84,6 +85,7 @@ void SetLineCodingBitRateHandler(linecoding_bitrate_handler handler)
  */
 static int8_t CDC_Itf_Init(void)
 {
+    DEBUG("CDC_Itf_Init\r\n");
     sdkInitialQueue(&USB_Rx_Queue, SDK_MAX_QUEUE_SIZE);
     /*##-5- Set Application Buffers ############################################*/
     USBD_CDC_SetRxBuffer(&USBD_Device, UserRxBuffer);
@@ -99,6 +101,7 @@ static int8_t CDC_Itf_Init(void)
  */
 static int8_t CDC_Itf_DeInit(void)
 {
+    DEBUG("CDC_Itf_DeInit\r\n");
     sdkReleaseQueue(&USB_Rx_Queue);
     return (USBD_OK);
 }
@@ -113,25 +116,31 @@ static int8_t CDC_Itf_DeInit(void)
  */
 static int8_t CDC_Itf_Control (uint8_t cmd, uint8_t* pbuf, uint16_t length)
 {
+    DEBUG("CDC_Itf_Control\r\n");
     switch (cmd)
     {
         case CDC_SEND_ENCAPSULATED_COMMAND:
+            DEBUG("CDC_SEND_ENCAPSULATED_COMMAND\r\n");
             /* Add your code here */
             break;
 
         case CDC_GET_ENCAPSULATED_RESPONSE:
+            DEBUG("CDC_GET_ENCAPSULATED_RESPONSE\r\n");
             /* Add your code here */
             break;
 
         case CDC_SET_COMM_FEATURE:
+            DEBUG("CDC_SET_COMM_FEATURE\r\n");
             /* Add your code here */
             break;
 
         case CDC_GET_COMM_FEATURE:
+            DEBUG("CDC_GET_COMM_FEATURE\r\n");
             /* Add your code here */
             break;
 
         case CDC_CLEAR_COMM_FEATURE:
+            DEBUG("CDC_CLEAR_COMM_FEATURE\r\n");
             /* Add your code here */
             break;
 
@@ -142,6 +151,7 @@ static int8_t CDC_Itf_Control (uint8_t cmd, uint8_t* pbuf, uint16_t length)
             LineCoding.paritytype = pbuf[5];
             LineCoding.datatype   = pbuf[6];
 
+            DEBUG("CDC_SET_LINE_CODING = %d\r\n", LineCoding.bitrate);
             //Callback handler when the host sets a specific linecoding
             if (NULL != APP_LineCodingBitRateHandler)
             {
@@ -150,6 +160,7 @@ static int8_t CDC_Itf_Control (uint8_t cmd, uint8_t* pbuf, uint16_t length)
             break;
 
         case CDC_GET_LINE_CODING:
+            DEBUG("CDC_GET_LINE_CODING\r\n");
             pbuf[0] = (uint8_t)(LineCoding.bitrate);
             pbuf[1] = (uint8_t)(LineCoding.bitrate >> 8);
             pbuf[2] = (uint8_t)(LineCoding.bitrate >> 16);
@@ -160,10 +171,12 @@ static int8_t CDC_Itf_Control (uint8_t cmd, uint8_t* pbuf, uint16_t length)
             break;
 
         case CDC_SET_CONTROL_LINE_STATE:
+            DEBUG("CDC_SET_CONTROL_LINE_STATE len = %d\r\n", length);
             /* Add your code here */
             break;
 
         case CDC_SEND_BREAK:
+            DEBUG("CDC_SEND_BREAK\r\n");
             /* Add your code here */
             break;
 
