@@ -130,6 +130,10 @@ EESP32_Pin_Info* HAL_Pin_Map(void);
 #define SDA1  A4
 #define SCL1  A3
 
+// DAC pins
+#define DAC1  A3
+#define DAC2  A4
+
 // The following pins are only defined for easy access during development.
 // Will be removed later as they are internal I/O and users
 // should not have too easy of access or bad code could do harm.
