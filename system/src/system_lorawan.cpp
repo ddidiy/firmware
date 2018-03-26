@@ -320,7 +320,7 @@ void os_getAppEui(uint8_t *buf)
     char temp[24] = {0};
     HAL_PARAMS_Get_System_appeui(appeui, sizeof(appeui));
     system_get_product_id(temp, sizeof(temp));
-    if(strcmp(temp, appeui) != 0) //lora产品将product_id当做appeui
+    if( (strcmp(temp, appeui) != 0) && ( strlen(temp) != 0) ) //lora产品将product_id当做appeui
     {
         strncpy(appeui,temp,strlen(temp));
         HAL_PARAMS_Set_System_appeui(appeui);
