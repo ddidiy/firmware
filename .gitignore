@@ -32,6 +32,7 @@ build/target/
 # 编译工具
 tools/dist
 tools/tool*
+
 tools/gcc-arm-none-eabi
 tools/xtensa-lx106-elf
 tools/xtensa-esp32-elf
@@ -44,7 +45,6 @@ tools/dfu-util
 tools/upload-reset
 
 #用户例子
-user/src/*
 user/src/application.ino
 
 #发布
